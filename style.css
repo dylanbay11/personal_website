@@ -1,0 +1,114 @@
+:root {
+  --primary: #e0f6ff;    /* airy light blue */
+  --accent:  #2a7db8;    /* deep sky */
+  --text:    #033649;    /* dark teal */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: var(--primary);
+}
+
+.sidebar {
+  background: #ffffff;
+  width: 280px;
+  padding: 2rem;
+  box-shadow: 2px 0 8px rgba(0,0,0,.08);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 1.2rem;
+}
+
+.bio {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contact {
+  list-style: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.contact li {
+  margin: 0.5rem 0;
+}
+
+.contact a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-left: 280px;
+  padding: 4rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.9rem 2rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #1b5c87;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.btn.secondary:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    text-align: center;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 2rem 1rem;
+  }
+}

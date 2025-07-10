@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dylan Bay | Resume</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pdf-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    embed, iframe{
+      width: 100%;
+      max-width: 900px;
+      height: 85vh;
+      border: none;
+      box-shadow: 0 0 10px rgba(0,0,0,.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-container">
+    <!-- Place your resume PDF at assets/resume.pdf -->
+    <embed src="assets/resume.pdf" type="application/pdf">
+  </div>
+</body>
+</html>
