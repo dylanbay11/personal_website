@@ -1,2 +1,4 @@
-setup-history-untracked
 .DS_Store
+deploy_key
+deploy_key.pub
+setup-history-untracked
