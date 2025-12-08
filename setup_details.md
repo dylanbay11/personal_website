@@ -82,6 +82,14 @@ certbot renew --dry-run
 - Cloudflare provides DDoS protection & CDN
 - Firewall allows: OpenSSH, Nginx Full
 
+## System Maintenance & Automation
+* **Timezone:** `America/Denver` (set via `timedatectl`).
+* **Update Method:** `unattended-upgrades` (Security patches only).
+* **Schedule:** Weekly on Tuesdays @ 04:00 Local.
+    * *Config location:* `systemctl edit apt-daily-upgrade.timer`
+* **Auto-Reboot:** Enabled @ 04:30 Local (if kernel update requires it).
+    * *Config location:* `/etc/apt/apt.conf.d/50unattended-upgrades`
+
 ## Backup Strategy
 - Website content: GitHub repository
 - VPS config: `/etc/nginx` and SSH keys (backup manually)
