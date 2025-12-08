@@ -1,6 +1,6 @@
 # VPS Website Setup Reference
-# Set up I believe a mix of this Claude-original advice, perhaps others
-#   This document represents Claude's understanding of my setup only.
+Set up I believe a mix of this Claude-original advice, perhaps others
+This document represents Claude's understanding of my setup only.
 
 ## Infrastructure
 - **VPS:** 30GB disk, Ubuntu 22.04 64-bit, 2GB RAM, IPv4 address
