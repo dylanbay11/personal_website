@@ -62,12 +62,20 @@ certbot certificates
 
 # Check disk space
 df -h
+# or
+du -h --max-depth=1 / 2>/dev/null | sort -hr
 
 # View Nginx logs
 tail -f /var/log/nginx/error.log
 
 # Test SSL renewal
 certbot renew --dry-run
+
+# Deep Clean (Kernels & Dependencies)
+apt autoremove --purge -y
+
+# Clean Snap Revisions (If /snap is huge)
+set -eu; snap list --all | awk '/disabled/{print $1, $3}' | while read snapname revision; do snap remove "$snapname" --revision="$revision"; done
 ```
 
 ## Deployment Workflow
@@ -89,6 +97,8 @@ certbot renew --dry-run
     * *Config location:* `systemctl edit apt-daily-upgrade.timer`
 * **Auto-Reboot:** Enabled @ 04:30 Local (if kernel update requires it).
     * *Config location:* `/etc/apt/apt.conf.d/50unattended-upgrades`
+* **Space-Saving** Also removed linux-firmware extras and unused kernels are at latest +1 backup for disk space
+    * Capped logs at 200MB in `/etc/systemd/journald.conf`
 
 ## Backup Strategy
 - Website content: GitHub repository
