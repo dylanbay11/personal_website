@@ -103,3 +103,59 @@ set -eu; snap list --all | awk '/disabled/{print $1, $3}' | while read snapname 
 ## Backup Strategy
 - Website content: GitHub repository
 - VPS config: `/etc/nginx` and SSH keys (backup manually)
+
+# Python Flask Applet
+Located without linking at tools.dylanbay.dev
+.md file below probably needs compression for conciseness but erring on side of caution for now
+
+## Infrastructure Additions
+- Python Runtime: uv (Fast Python package manager)
+- App Server: Gunicorn (Python WSGI HTTP Server)
+- Framework: Flask
+- Cloned in Desktop/Learning, like personal_website
+
+```
+New Key Directories
+/var/www/website-tools/         # Python App (git repo)
+/root/.local/bin/uv             # uv binary location
+/etc/systemd/system/website-tools.service  # App Service config
+Nginx Configuration (Subdomain Proxy)
+File: /etc/nginx/sites-available/website-tools
+
+Nginx
+
+server {
+    server_name tools.dylanbay.dev;
+    location / {
+        proxy_pass http://127.0.0.1:8000; # Forward to Python
+        # + Standard Proxy Headers
+    }
+}
+Systemd Service (Python App)
+File: /etc/systemd/system/website-tools.service
+
+User: root
+
+Working Directory: /var/www/website-tools
+
+Command: /var/www/website-tools/.venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 app:app
+
+Environment: PATH includes .venv/bin
+```
+
+## GitHub Actions for App
+Repo: website-tools Workflow: Same logic as main site, but runs:
+git pull
+/root/.local/bin/uv sync (Update dependencies)
+systemctl restart website-tools (Restart app)
+
+## New Maintenance Commands
+**Restart the Python App (after manual changes)**
+systemctl restart website-tools
+
+**Check App Status/Logs**
+systemctl status website-tools
+journalctl -u website-tools -f
+
+**Update Python Dependencies manually**
+cd /var/www/website-tools && /root/.local/bin/uv sync
