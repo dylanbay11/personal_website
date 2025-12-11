@@ -11,8 +11,8 @@ This document represents Claude's understanding of my setup only.
 - **PostgreSQL:** Instance also runs on VPS
 
 # 2. Connect via Client (DBeaver/Python)
-# Host: 127.0.0.1
-# Port: 5432
+- Host: 127.0.0.1
+- Port: 5432
 
 ## Key Directories & Files
 ```
