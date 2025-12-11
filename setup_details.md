@@ -3,14 +3,14 @@ Set up I believe a mix of this Claude-original advice, perhaps others
 This document represents Claude's understanding of my setup only.
 
 ## Infrastructure
-- **VPS:** 30GB disk, Ubuntu 22.04 64-bit, 2GB RAM, IPv4 address
+- **VPS:** 30GB disk, Ubuntu 22.04 64-bit, 2GB RAM, IPv4 address, from Racknerd
 - **Domain:** dylanbay.dev (via Cloudflare)
 - **Web Server:** Nginx
 - **SSL:** Let's Encrypt via Certbot
 - **Deployment:** GitHub Actions auto-deploy on push
 - **PostgreSQL:** Instance also runs on VPS
 
-# 2. Connect via Client (DBeaver/Python)
+### Connect via Client (DBeaver/Python)
 - Host: 127.0.0.1
 - Port: 5432
 
@@ -22,7 +22,7 @@ This document represents Claude's understanding of my setup only.
 ~/.ssh/github_actions           # SSH key for GitHub Actions
 ```
 
-## Nginx Configuration
+### Nginx Configuration
 ```nginx
 # /etc/nginx/sites-available/dylanbay.dev
 server {
@@ -110,25 +110,26 @@ set -eu; snap list --all | awk '/disabled/{print $1, $3}' | while read snapname 
 - VPS config: `/etc/nginx` and SSH keys (backup manually)
 
 # Python Flask Applet
-Located without linking at tools.dylanbay.dev
-.md file below probably needs compression for conciseness but erring on side of caution for now
+Located (without internal links) at tools.dylanbay.dev (use direct access)
 
 ## Infrastructure Additions
-- Python Runtime: uv (Fast Python package manager)
+- Python Runtime: uv
 - App Server: Gunicorn (Python WSGI HTTP Server)
 - Framework: Flask
-- Cloned in Desktop/Learning, like personal_website
+- Actual python content is separate repo `website-tools` at https://github.com/dylanbay11/website-tools
+- Cloned locally in Desktop/Learning, like personal_website (this repo)
 
-```
-New Key Directories
+**New Key Directories**
+```bash
 /var/www/website-tools/         # Python App (git repo)
 /root/.local/bin/uv             # uv binary location
 /etc/systemd/system/website-tools.service  # App Service config
 Nginx Configuration (Subdomain Proxy)
 File: /etc/nginx/sites-available/website-tools
+```
 
-Nginx
-
+**Nginx Addition**
+```
 server {
     server_name tools.dylanbay.dev;
     location / {
@@ -165,6 +166,8 @@ journalctl -u website-tools -f
 **Update Python Dependencies manually**
 cd /var/www/website-tools && /root/.local/bin/uv sync
 
+# SQL Server (Postgres 14.2)
+
 **Check Database Status**
 systemctl status postgresql
 
@@ -173,3 +176,7 @@ sudo -i -u postgres psql
 
 **Backup Database**
 pg_dump analysis > analysis_backup.sql
+
+### Note on versions:
+At some point next year (2026), will need to upgrade Ubuntu (Postgres automatically with it)
+Not sure if that's something I do, or work with the VPS provider for
