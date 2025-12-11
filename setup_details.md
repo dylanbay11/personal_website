@@ -8,6 +8,11 @@ This document represents Claude's understanding of my setup only.
 - **Web Server:** Nginx
 - **SSL:** Let's Encrypt via Certbot
 - **Deployment:** GitHub Actions auto-deploy on push
+- **PostgreSQL:** Instance also runs on VPS
+
+# 2. Connect via Client (DBeaver/Python)
+# Host: 127.0.0.1
+# Port: 5432
 
 ## Key Directories & Files
 ```
@@ -159,3 +164,12 @@ journalctl -u website-tools -f
 
 **Update Python Dependencies manually**
 cd /var/www/website-tools && /root/.local/bin/uv sync
+
+**Check Database Status**
+systemctl status postgresql
+
+**Enter SQL Shell (on server)**
+sudo -i -u postgres psql
+
+**Backup Database**
+pg_dump analysis > analysis_backup.sql
