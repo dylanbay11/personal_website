@@ -44,6 +44,7 @@
     <section id="charts">
       <h2>Charts Worth Talking About</h2>
       <p class="section-desc">A small, growing collection of visualizations I found worth thinking about.</p>
+      <p class="resume-hint">&#8595; Scroll down for mini-resume</p>
       <div class="carousel">
         <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
         <div class="carousel-window">
@@ -69,17 +70,20 @@
               </div>
             </div>
             <div class="chart-card">
-              <div class="chart-thumb chart-thumb-contain">
+              <div class="chart-thumb chart-thumb-contain chart-thumb-zoomable" id="mosaicThumb">
                 <img src="assets/mosaic_final.png" alt="Mosaic chart of AI use cases">
               </div>
               <div class="chart-body">
                 <h3>What Are People Actually Using AI For?</h3>
                 <p>Last year OpenAI published this fascinating breakdown of what people are using AI to do, categorized by AI itself of course. I've long felt that mosaic plots are fantastic in theory, since they let you see groups and individual grouped items so clearly, but this spin on it with extra space between the bars was a pleasant surprise. The width of the bars are proportional to their total contribution as a group, so area is accurate. It's not without its compromises, but the visual clarity and the smartly chosen categories is a great example of an information-dense chart that still remains accessible.</p>
-                <a class="chart-source" href="https://www.nber.org/papers/w34255" target="_blank" rel="noopener">Source</a>
+                <div class="chart-source-row">
+                  <a class="chart-source" href="https://www.nber.org/papers/w34255" target="_blank" rel="noopener">Source</a>
+                  <button class="chart-zoom-btn" id="mosaicZoomBtn">Click to zoom</button>
+                </div>
               </div>
             </div>
             <div class="chart-card">
-              <div class="chart-thumb">
+              <div class="chart-thumb chart-thumb-contain">
                 <img src="assets/NBA_ages_temp_final.PNG" alt="NBA PER by age, grouped by rookie age">
               </div>
               <div class="chart-body">
@@ -97,7 +101,6 @@
         <button class="dot"></button>
         <button class="dot"></button>
       </div>
-      <p class="resume-hint">&#8595; Scroll down for mini-resume</p>
     </section>
 
     <section id="skills">
@@ -212,6 +215,11 @@
     </div>
   </footer>
 
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <img src="assets/mosaic_final.png" alt="Mosaic chart of AI use cases — enlarged">
+  </div>
+
   <script>
     (function () {
       let current = 0;
@@ -228,6 +236,17 @@
       document.getElementById('prevBtn').addEventListener('click', function () { goTo(current - 1); });
       document.getElementById('nextBtn').addEventListener('click', function () { goTo(current + 1); });
       dots.forEach(function (d, i) { d.addEventListener('click', function () { goTo(i); }); });
+    })();
+
+    (function () {
+      var lightbox = document.getElementById('lightbox');
+      function open() { lightbox.classList.add('active'); lightbox.setAttribute('aria-hidden', 'false'); }
+      function close() { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); }
+      document.getElementById('mosaicZoomBtn').addEventListener('click', open);
+      document.getElementById('mosaicThumb').addEventListener('click', open);
+      document.getElementById('lightboxClose').addEventListener('click', close);
+      lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     })();
   </script>
 </body>
