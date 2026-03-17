@@ -369,6 +369,29 @@ h2::after {
   object-position: center;
 }
 
+.chart-thumb-contain {
+  background: #f8f9fa;
+}
+
+.chart-thumb-contain img {
+  object-fit: contain;
+}
+
+.chart-source {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.chart-source:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .chart-body {
   flex: 1;
   padding: 1.75rem 2rem;

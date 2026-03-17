@@ -41,6 +41,65 @@
 
   <main>
 
+    <section id="charts">
+      <h2>Charts Worth Talking About</h2>
+      <p class="section-desc">A small, growing collection of visualizations I found worth thinking about.</p>
+      <div class="carousel">
+        <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+        <div class="carousel-window">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="chart-card">
+              <div class="chart-thumb">
+                <img src="assets/proba_perceptions_final.png" alt="Perceptions of Probability ridgeline chart">
+              </div>
+              <div class="chart-body">
+                <h3>Perceptions of Probability</h3>
+                <p>How do people actually interpret phrases like "highly likely" or "we doubt"? This ridgeline plot maps surveyed probability estimates to the language analysts use — and the overlap is wild. A classic argument for just saying the number. However, that's not always possible, so it's on us to be prepared to communicate effectively on the level people understand and watch out for accidentally giving the wrong impression.</p>
+                <a class="chart-source" href="https://www.reddit.com/r/dataisbeautiful/comments/6vythg/i_redid_my_perceptions_of_probability_and_numbers/" target="_blank" rel="noopener">Source</a>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-thumb">
+                <img src="assets/overthinking_final.jpg" alt="Am I Overthinking This? Venn diagram">
+              </div>
+              <div class="chart-body">
+                <h3>Am I Overthinking This?</h3>
+                <p>This book is brilliant. And not just because the author is pioneering a trend of 7-set Venn diagrams. I think it's a fun reminder that there can be joy in simply looking at a chart and finding all the little hints, nuggets of information, and more in it, but also that even a complicated chart can still serve up a strong message that grabs your attention: Am I overthinking this? Yes.</p>
+                <a class="chart-source" href="https://www.amazon.com/Am-Overthinking-This-Over-answering-questions/dp/1452175861" target="_blank" rel="noopener">Source</a>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-thumb chart-thumb-contain">
+                <img src="assets/mosaic_final.png" alt="Mosaic chart of AI use cases">
+              </div>
+              <div class="chart-body">
+                <h3>What Are People Actually Using AI For?</h3>
+                <p>Last year OpenAI published this fascinating breakdown of what people are using AI to do, categorized by AI itself of course. I've long felt that mosaic plots are fantastic in theory, since they let you see groups and individual grouped items so clearly, but this spin on it with extra space between the bars was a pleasant surprise. The width of the bars are proportional to their total contribution as a group, so area is accurate. It's not without its compromises, but the visual clarity and the smartly chosen categories is a great example of an information-dense chart that still remains accessible.</p>
+                <a class="chart-source" href="https://www.nber.org/papers/w34255" target="_blank" rel="noopener">Source</a>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-thumb">
+                <img src="assets/NBA_ages_temp_final.PNG" alt="NBA PER by age, grouped by rookie age">
+              </div>
+              <div class="chart-body">
+                <h3>NBA Debut Age Effect on Performance</h3>
+                <p>I saved this chart last year because it answered a burning question or two of great relevance for the draft I had. First, how long, exactly, do you need to wait for your newly drafted player to contribute, and then to peak? And second, do the first few years look dramatically different if you waited to debut? There are selection effects in play, so it can't tell you when to debut, but it can tell NBA GMs about what to expect. Unfortunately, I cannot find the source of this chart, anywhere. If you recognize it, let me know! I want to reread the report it came from!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+      </div>
+      <div class="carousel-dots" id="carouselDots">
+        <button class="dot active"></button>
+        <button class="dot"></button>
+        <button class="dot"></button>
+        <button class="dot"></button>
+      </div>
+      <p class="resume-hint">&#8595; Scroll down for mini-resume</p>
+    </section>
+
     <section id="skills">
       <h2>Skills</h2>
       <div class="skills-grid">
@@ -135,62 +194,6 @@
           <span class="pill pill-muted">Volunteer Tutor</span>
         </div>
       </div>
-    </section>
-
-    <section id="charts">
-      <h2>Charts Worth Talking About</h2>
-      <p class="section-desc">A small, growing collection of visualizations I found worth thinking about.</p>
-      <div class="carousel">
-        <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
-        <div class="carousel-window">
-          <div class="carousel-track" id="carouselTrack">
-            <div class="chart-card">
-              <div class="chart-thumb">
-                <img src="assets/proba_perceptions_final.png" alt="Perceptions of Probability ridgeline chart">
-              </div>
-              <div class="chart-body">
-                <h3>Perceptions of Probability</h3>
-                <p>How do people actually interpret phrases like "highly likely" or "we doubt"? This ridgeline plot maps surveyed probability estimates to the language analysts use — and the overlap is wild. A classic argument for just saying the number.</p>
-              </div>
-            </div>
-            <div class="chart-card">
-              <div class="chart-thumb">
-                <img src="assets/overthinking_final.jpg" alt="Am I Overthinking This? Venn diagram">
-              </div>
-              <div class="chart-body">
-                <h3>Am I Overthinking This?</h3>
-                <p>From Michelle Rial's book of the same name — technically a 7-set Venn diagram of everything that makes us anxious. It's absurd, it's accurate, and the fact that "YES" sits dead at the intersection of all of it is genuinely brilliant design.</p>
-              </div>
-            </div>
-            <div class="chart-card">
-              <div class="chart-thumb">
-                <img src="assets/mosaic_final.png" alt="Mosaic chart of AI use cases">
-              </div>
-              <div class="chart-body">
-                <h3>What Are People Actually Using AI For?</h3>
-                <p>A mosaic breakdown of real ChatGPT usage across task categories — Seeking Information leads, followed by Writing and Technical Help. The long tail of specific use cases is what's interesting. Less "replace everything" and more "help me with this one thing."</p>
-              </div>
-            </div>
-            <div class="chart-card">
-              <div class="chart-thumb">
-                <img src="assets/NBA_ages_temp_final.PNG" alt="NBA PER by age, grouped by rookie age">
-              </div>
-              <div class="chart-body">
-                <h3>NBA PER by Age, Segmented by Debut Age</h3>
-                <p>Player Efficiency Rating tracked across career age, split by how old players were in their first season. Players who debut younger tend to peak higher — but the spread is the story. Classic example of selection bias lurking in sports analytics.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
-      </div>
-      <div class="carousel-dots" id="carouselDots">
-        <button class="dot active"></button>
-        <button class="dot"></button>
-        <button class="dot"></button>
-        <button class="dot"></button>
-      </div>
-      <p class="resume-hint">&#8595; Scroll down for mini-resume</p>
     </section>
 
   </main>
