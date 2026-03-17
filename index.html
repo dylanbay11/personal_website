@@ -44,7 +44,6 @@
     <section id="charts">
       <h2>Charts Worth Talking About</h2>
       <p class="section-desc">A small, growing collection of visualizations I found worth thinking about.</p>
-      <p class="resume-hint">&#8595; Scroll down for mini-resume</p>
       <div class="carousel">
         <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
         <div class="carousel-window">
@@ -215,7 +214,7 @@
     </div>
   </footer>
 
-  <div id="lightbox" class="lightbox" aria-hidden="true">
+  <div id="lightbox" class="lightbox" aria-hidden="true" style="display:none">
     <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
     <img src="assets/mosaic_final.png" alt="Mosaic chart of AI use cases — enlarged">
   </div>
@@ -240,8 +239,8 @@
 
     (function () {
       var lightbox = document.getElementById('lightbox');
-      function open() { lightbox.classList.add('active'); lightbox.setAttribute('aria-hidden', 'false'); }
-      function close() { lightbox.classList.remove('active'); lightbox.setAttribute('aria-hidden', 'true'); }
+      function open() { lightbox.style.display = 'flex'; lightbox.setAttribute('aria-hidden', 'false'); }
+      function close() { lightbox.style.display = 'none'; lightbox.setAttribute('aria-hidden', 'true'); }
       document.getElementById('mosaicZoomBtn').addEventListener('click', open);
       document.getElementById('mosaicThumb').addEventListener('click', open);
       document.getElementById('lightboxClose').addEventListener('click', close);
