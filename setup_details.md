@@ -117,7 +117,7 @@ Located (without internal links) at tools.dylanbay.dev (use direct access)
 - App Server: Gunicorn (Python WSGI HTTP Server)
 - Framework: Flask
 - Actual python content is separate repo `website-tools` at https://github.com/dylanbay11/website-tools
-- Cloned locally in Desktop/Learning, like personal_website (this repo)
+- Cloned locally in Desktop/Projects, like personal_website (this repo)
 
 **New Key Directories**
 ```bash
