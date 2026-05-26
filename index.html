@@ -4,12 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dylan Bay — Data Scientist</title>
+  <script>
+    (function(){
+      var t; try {
+        t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+      } catch(e) { t = 'light'; }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <nav>
-    <span class="nav-name">Dylan Bay</span>
+    <div class="nav-left">
+      <input type="checkbox" id="themeToggle" class="theme-toggle-input">
+      <label class="theme-toggle" for="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-knob"></span>
+        </span>
+      </label>
+      <span class="nav-name">Dylan Bay</span>
+    </div>
     <ul>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -246,6 +263,18 @@
       document.getElementById('lightboxClose').addEventListener('click', close);
       lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+  <script>
+    (function(){
+      var t = document.getElementById('themeToggle');
+      if (!t) return;
+      t.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+      t.addEventListener('change', function(){
+        var m = t.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', m);
+        try { localStorage.setItem('theme', m); } catch(e) {}
+      });
     })();
   </script>
 </body>

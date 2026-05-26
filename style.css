@@ -14,13 +14,49 @@
   --accent-hover: #1d4ed8;
   --accent-light: #eff6ff;
   --border: #e2e8f0;
+  --surface-muted: #f1f5f9;
+  --surface-subtle: #f8f9fa;
+  --switch-off: #cbd5e1;
+  --nav-bg: rgba(248, 247, 244, 0.92);
+  --footer-bg: #0f172a;
+  --footer-text: #94a3b8;
+  --footer-label: #475569;
+  --footer-link: #93c5fd;
+  --footer-link-muted: #64748b;
   --radius: 12px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.05);
   --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
 }
 
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --bg-card: #1a1d27;
+  --text: #e4e5ea;
+  --text-muted: #9599a6;
+  --accent: #5d9cf5;
+  --accent-hover: #7db5f7;
+  --accent-light: rgba(93, 156, 245, 0.12);
+  --border: #272a35;
+  --surface-muted: #1e2130;
+  --surface-subtle: #191c26;
+  --switch-off: #3d4353;
+  --nav-bg: rgba(15, 17, 23, 0.88);
+  --footer-bg: #080a0f;
+  --footer-text: #9599a6;
+  --footer-label: #5d6270;
+  --footer-link: #7db5f7;
+  --footer-link-muted: #6b7080;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+  --shadow: 0 4px 16px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+}
+
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
@@ -29,6 +65,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ---- Nav ---- */
@@ -36,7 +73,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(248, 247, 244, 0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
@@ -45,6 +82,13 @@ nav {
   justify-content: space-between;
   padding: 0 2rem;
   height: 56px;
+}
+
+/* ---- Nav left (toggle + name) ---- */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .nav-name {
@@ -70,6 +114,60 @@ nav a {
 
 nav a:hover {
   color: var(--accent);
+}
+
+/* ---- Theme Toggle (iOS-style pill switch) ---- */
+.theme-toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle-track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--switch-off);
+  transition: background 0.25s ease;
+}
+
+.theme-toggle-input:checked + .theme-toggle .theme-toggle-track {
+  background: var(--accent);
+}
+
+.theme-toggle-input:focus-visible + .theme-toggle .theme-toggle-track {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle-input:checked + .theme-toggle .theme-toggle-knob {
+  transform: translateX(20px);
 }
 
 /* ---- Hero ---- */
@@ -233,7 +331,7 @@ h2::after {
 }
 
 .pill-muted {
-  background: #f1f5f9;
+  background: var(--surface-muted);
   color: var(--text-muted);
 }
 
@@ -359,7 +457,7 @@ h2::after {
   width: 42%;
   flex-shrink: 0;
   overflow: hidden;
-  background: #f1f5f9;
+  background: var(--surface-muted);
 }
 
 .chart-thumb img {
@@ -370,7 +468,7 @@ h2::after {
 }
 
 .chart-thumb-contain {
-  background: #f8f9fa;
+  background: var(--surface-subtle);
 }
 
 .chart-thumb-contain img {
@@ -527,8 +625,8 @@ h2::after {
 
 /* ---- Footer ---- */
 footer {
-  background: var(--text);
-  color: #94a3b8;
+  background: var(--footer-bg);
+  color: var(--footer-text);
   padding: 2.5rem 2rem;
   scroll-margin-top: 70px;
 }
@@ -548,12 +646,12 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.09em;
   font-weight: 700;
-  color: #475569;
+  color: var(--footer-label);
   margin-bottom: 0.3rem;
 }
 
 .footer-contact a {
-  color: #93c5fd;
+  color: var(--footer-link);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
@@ -570,7 +668,7 @@ footer {
 }
 
 .footer-links a {
-  color: #64748b;
+  color: var(--footer-link-muted);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
