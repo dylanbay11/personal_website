@@ -3,3 +3,4 @@ deploy_key
 deploy_key.pub
 setup-history-untracked
 subdomain-setup.md
+subdomain-setup-general.md
