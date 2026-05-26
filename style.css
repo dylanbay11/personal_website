@@ -98,6 +98,11 @@ nav {
   color: var(--text);
 }
 
+.theme-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
 nav ul {
   display: flex;
   list-style: none;
