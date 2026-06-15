@@ -17,6 +17,8 @@
 </head>
 <body>
 
+  <canvas id="asciiHero" aria-hidden="true"></canvas>
+
   <nav>
     <div class="nav-left">
       <input type="checkbox" id="themeToggle" class="theme-toggle-input">
@@ -267,6 +269,128 @@
       document.getElementById('lightboxClose').addEventListener('click', close);
       lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+  <script>
+    // ---- ASCII hero band (homage to performativeUI ascii-hero) ----
+    // Dark mode = "low capacity" (faint ambient glow); light mode = "spotlight"
+    // (field hidden until revealed under the cursor). Colors read from CSS vars.
+    (function () {
+      var canvas = document.getElementById('asciiHero');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var ramp = " .`'\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var CELL_W = 8, CELL_H = 13, SPOT_R = 8;
+      var cols = 0, rows = 0, cw = 0, ch = 0, base = null;
+      var mouse = { x: -9999, y: -9999, active: false };
+      var col = { glow: '#5d9cf5', ink: '#64748b' };
+
+      function isDark() {
+        return document.documentElement.getAttribute('data-theme') === 'dark';
+      }
+      function readColors() {
+        var cs = getComputedStyle(document.documentElement);
+        col.glow = cs.getPropertyValue('--accent').trim() || col.glow;
+        col.ink = cs.getPropertyValue('--text-muted').trim() || col.ink;
+      }
+      function seed() {
+        base = new Float32Array(cols * rows);
+        for (var y = 0; y < rows; y++) {
+          for (var x = 0; x < cols; x++) {
+            var nx = (x / cols) * 2 - 1, ny = (y / rows) * 2 - 1;
+            var stripes = 0.5 + 0.5 * Math.sin(nx * 6 + ny * 2);
+            var r = Math.sqrt(nx * nx + ny * ny);
+            var radial = 1 - Math.min(1, r * 1.2);
+            base[y * cols + x] = 0.25 * stripes + 0.55 * radial;
+          }
+        }
+      }
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var rect = canvas.getBoundingClientRect();
+        cw = rect.width; ch = rect.height;
+        canvas.width = Math.floor(cw * dpr);
+        canvas.height = Math.floor(ch * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.font = (CELL_H - 1) + 'px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+        ctx.textBaseline = 'top';
+        cols = Math.ceil(cw / CELL_W) + 1;
+        rows = Math.ceil(ch / CELL_H) + 1;
+        seed();
+      }
+
+      function render(time) {
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.font = (CELL_H - 1) + 'px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+        ctx.textBaseline = 'top';
+        var dark = isDark();
+        var lowBase = dark ? 0.16 : 0.09;
+        var peak = dark ? 0.55 : 0.95;
+        var cx = mouse.x / CELL_W, cy = mouse.y / CELL_H;
+
+        for (var y = 0; y < rows; y++) {
+          for (var x = 0; x < cols; x++) {
+            var v = base[y * cols + x];
+            if (!reduce) {
+              v += 0.15 * Math.sin(x * 0.18 + time * 1.4) * Math.cos(y * 0.22 - time * 1.1);
+            }
+            v = v < 0 ? 0 : v > 1 ? 1 : v;
+            var chx = ramp[(v * (ramp.length - 1)) | 0];
+            if (chx === ' ') continue;
+
+            var spot = 0;
+            if (mouse.active) {
+              var dx = x - cx, dy = (y - cy) * 1.8;
+              spot = Math.exp(-(dx * dx + dy * dy) / (SPOT_R * SPOT_R * 2));
+            }
+
+            var alpha, color;
+            if (dark) {
+              alpha = lowBase * (0.5 + 0.7 * v) + (peak - lowBase) * spot * 0.7;
+              color = col.glow;
+            } else {
+              alpha = lowBase + (peak - lowBase) * spot;
+              color = spot > 0.35 ? col.glow : col.ink;
+            }
+            ctx.globalAlpha = alpha > 1 ? 1 : alpha;
+            ctx.fillStyle = color;
+            ctx.fillText(chx, x * CELL_W, y * CELL_H);
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // Drive: continuous ~30fps when animated; on-demand when reduced motion.
+      var start = performance.now(), last = 0, pending = false;
+      function loop(now) {
+        if (now - last >= 33) { last = now; render((now - start) / 1000); }
+        requestAnimationFrame(loop);
+      }
+      function once() {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function (now) { pending = false; render((now - start) / 1000); });
+      }
+
+      window.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.active = true;
+        if (reduce) once();
+      });
+      document.addEventListener('mouseleave', function () {
+        mouse.active = false;
+        if (reduce) once();
+      });
+      window.addEventListener('resize', function () { resize(); if (reduce) once(); });
+      new MutationObserver(function () { readColors(); if (reduce) once(); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+      readColors();
+      resize();
+      if (reduce) once(); else requestAnimationFrame(loop);
     })();
   </script>
   <script>

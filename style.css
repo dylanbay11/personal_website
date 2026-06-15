@@ -53,6 +53,8 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  background: var(--bg);
+  transition: background-color 0.3s ease;
 }
 
 html[data-theme="dark"] {
@@ -61,11 +63,11 @@ html[data-theme="dark"] {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   line-height: 1.6;
   font-size: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 /* ---- Nav ---- */
@@ -175,17 +177,42 @@ nav a:hover {
   transform: translateX(20px);
 }
 
+/* ---- ASCII field (fixed full-page background) ---- */
+#asciiHero {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---- Content islands floating over the ASCII field ---- */
+/* Each block paints the page colour and casts a soft same-colour halo, so the
+   ASCII field reads only in the gutters and the gaps and fades in around content. */
+.hero-inner,
+main section,
+.footer-inner {
+  position: relative;
+  background: var(--bg);
+  border-radius: var(--radius);
+  /* Stacked blurs: soft core + long tail so the field fades in very gradually. */
+  box-shadow: 0 0 60px 0 var(--bg), 0 0 130px 0 var(--bg), 0 0 210px 0 var(--bg);
+}
+
 /* ---- Hero ---- */
+/* #hero is just a 900px wrapper (matching main's inset); .hero-inner is the island. */
 #hero {
-  padding: 5rem 2rem 3.5rem;
+  padding: 0 2rem;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 1.5rem auto 2.25rem;
 }
 
 .hero-inner {
   display: flex;
   gap: 3.5rem;
   align-items: center;
+  padding: 1.5rem;
 }
 
 .headshot {
@@ -272,9 +299,10 @@ main {
   padding: 0 2rem 5rem;
 }
 
-section {
-  padding-top: 4rem;
-  scroll-margin-top: 70px;
+main section {
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-bottom: 2.5rem;
+  scroll-margin-top: 80px;
 }
 
 h2 {
@@ -630,15 +658,18 @@ h2::after {
 
 /* ---- Footer ---- */
 footer {
-  background: var(--footer-bg);
+  background: transparent;
   color: var(--footer-text);
-  padding: 2.5rem 2rem;
-  scroll-margin-top: 70px;
+  padding: 0 2rem 3rem;
+  scroll-margin-top: 80px;
 }
 
 .footer-inner {
   max-width: 900px;
   margin: 0 auto;
+  /* island override: keep the dark panel, halo stays page-coloured via shared rule */
+  background: var(--footer-bg);
+  padding: 1.5rem 1.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -691,13 +722,20 @@ footer {
   }
 
   #hero {
-    padding: 3rem 1.25rem 2.5rem;
+    padding: 0 1.25rem;
+    margin: 1rem auto 1.5rem;
+  }
+
+  main section {
+    padding: 1rem 1.25rem 1.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .hero-inner {
     flex-direction: column;
     gap: 1.5rem;
     text-align: center;
+    padding: 1.25rem;
   }
 
   .headshot {
