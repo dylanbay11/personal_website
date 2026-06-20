@@ -8,17 +8,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
+    - uses: actions/checkout@v4
+
     - name: Deploy to server
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
+        # set -e: fail the run on any error. Previously a failed `git pull` was
+        # masked by the final `nginx reload`, so broken deploys still showed green.
+        # The server is a strict mirror of origin/main — fetch + reset --hard
+        # instead of pull, so it can never diverge and silently block deploys.
+        # NEVER commit on the server: local commits are discarded by reset --hard.
         script: |
+          set -e
           git config --global --add safe.directory /var/www/dylanbay.dev
           cd /var/www/dylanbay.dev
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
           chown -R www-data:www-data /var/www/dylanbay.dev
           systemctl reload nginx

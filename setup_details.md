@@ -42,10 +42,24 @@ server {
 ```yaml
 on: push to main branch
 → SSH to VPS
-→ git pull in /var/www/dylanbay.dev
+→ git fetch + git reset --hard origin/main in /var/www/dylanbay.dev
 → fix permissions
 → reload nginx
 ```
+
+### Deploy config decision: server is a strict mirror of origin/main
+The deploy does `git reset --hard origin/main` (not `git pull`), with `set -e`
+so any failure fails the run loudly.
+
+**What this means practically:**
+- **Develop locally only.** The server is a read-only copy of `origin/main`.
+  Anything you edit or commit directly on the VPS is **wiped on the next deploy**.
+- Flow is one-directional: edit local → `git push origin main` → auto-deploy.
+- Upside: the server can never "diverge" and silently block deploys (which is
+  exactly what happened once — a stray on-server commit jammed every deploy for
+  weeks while Actions still showed green, because the old script lacked `set -e`).
+- Untracked files on the server (logs, notes, `/etc/nginx`, certs) are untouched
+  — only tracked repo files get reset.
 
 **Required GitHub Secrets:**
 - `HOST`: VPS IP address
