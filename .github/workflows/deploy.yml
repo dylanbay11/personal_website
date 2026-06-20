@@ -29,3 +29,17 @@ jobs:
           git reset --hard origin/main
           chown -R www-data:www-data /var/www/dylanbay.dev
           systemctl reload nginx
+
+    # Purge Cloudflare's edge cache so changed assets (e.g. style.css, which is
+    # linked versionless) can never be served stale after a deploy. Without this,
+    # an edge node keeps the old file until its TTL expires — the failure mode
+    # that left the dark-mode toggle + ASCII background broken behind a stale CSS.
+    - name: Purge Cloudflare cache
+      run: |
+        resp=$(curl -sS -X POST \
+          "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+          -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --data '{"purge_everything":true}')
+        echo "$resp"
+        echo "$resp" | grep -q '"success":true'
