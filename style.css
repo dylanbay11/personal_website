@@ -18,10 +18,10 @@
   --surface-subtle: #f8f9fa;
   --switch-off: #cbd5e1;
   --nav-bg: rgba(248, 247, 244, 0.92);
-  --footer-bg: #0f172a;
-  --footer-text: #94a3b8;
+  --footer-bg: #ffffff;
+  --footer-text: #64748b;
   --footer-label: #475569;
-  --footer-link: #93c5fd;
+  --footer-link: #2563eb;
   --footer-link-muted: #64748b;
   --radius: 12px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.05);
@@ -41,7 +41,7 @@
   --surface-subtle: #191c26;
   --switch-off: #3d4353;
   --nav-bg: rgba(15, 17, 23, 0.88);
-  --footer-bg: #080a0f;
+  --footer-bg: #1a1d27;
   --footer-text: #9599a6;
   --footer-label: #5d6270;
   --footer-link: #7db5f7;
@@ -667,8 +667,10 @@ footer {
 .footer-inner {
   max-width: 900px;
   margin: 0 auto;
-  /* island override: keep the dark panel, halo stays page-coloured via shared rule */
+  /* island panel matching skill cards, halo stays page-coloured via shared rule */
   background: var(--footer-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1.5rem 1.75rem;
   display: flex;
   align-items: center;
@@ -695,7 +697,7 @@ footer {
 }
 
 .footer-contact a:hover {
-  color: #fff;
+  color: var(--text);
 }
 
 .footer-links {
@@ -712,7 +714,7 @@ footer {
 }
 
 .footer-links a:hover {
-  color: #fff;
+  color: var(--text);
 }
 
 /* ---- Responsive ---- */
