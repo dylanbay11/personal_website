@@ -123,8 +123,19 @@ set -eu; snap list --all | awk '/disabled/{print $1, $3}' | while read snapname 
 - Website content: GitHub repository
 - VPS config: `/etc/nginx` and SSH keys (backup manually)
 
-# Python Flask Applet
-Located (without internal links) at tools.dylanbay.dev (use direct access)
+# Python Flask Applets (subdomains)
+Three Flask apps run on the same VPS, each its own repo / nginx site / systemd
+service / cert, each Gunicorn-bound to localhost and reverse-proxied by nginx.
+None are linked from the main site (use direct access).
+
+| Subdomain                  | Repo (`dylanbay11/…`) | Service / port            | Notes |
+|----------------------------|-----------------------|---------------------------|-------|
+| tools.dylanbay.dev         | website-tools         | website-tools.service :8000 | Task Priority Spinner |
+| fs.dylanbay.dev            | fs-app                | fs-app.service :8001       | Forest Shuffle (board game) calculator — simple, no DB |
+| tracker-tool.dylanbay.dev  | tracker-tool          | tracker-tool.service :8002 | A tracker — VERY early days; uses a SQLite `tasks.db` |
+
+All three share the deploy/runtime pattern below (shown for website-tools; the
+other two are identical aside from repo name, port, and service name).
 
 ## Infrastructure Additions
 - Python Runtime: uv
